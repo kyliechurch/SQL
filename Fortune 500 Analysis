@@ -64,7 +64,7 @@ FROM fortune_companies
 WHERE healthcare_benefits =1 
 AND paid_time_off_days >= 20;
 
-# Which companies have revenue greater that or equal to 300 *or* 400
+# Which companies have revenue greater than or equal to 300 *or* 400
 --SELECT company_name 
 FROM fortune_companies 
 WHERE revenue >= 300 
