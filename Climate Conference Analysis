@@ -119,31 +119,36 @@ SELECT * FROM reservations LIMIT 5;
 SELECT * FROM events LIMIT 5;
 SELECT * FROM hotels LIMIT 5;
 
+#LEFT JOIN: List all vips and events they are associated with.
 --SELECT vips.last_name, vips.first_name, events.event_id 
 FROM vips LEFT JOIN events 
 ON vips.event = events.event_id;
 
+#INNER JOIN: List vips where dinner rsvp = 0
 --SELECT vips.last_name, reservations.dinner_rsvp 
 FROM vips INNER JOIN reservations 
 ON vips.member_id = reservations.member_id 
 WHERE dinner_rsvp = 0;
 
+#MULTIPLE JOIN: List event names, vip names, and their welcome rsvp status.
 --SELECT events.event_name, vips.first_name, vips.last_name, reservations.welcome_rsvp 
 FROM events LEFT JOIN vips 
 ON vips.event = events.event_id 
 LEFT JOIN reservations ON vips.member_id = reservations.member_id;
 
---SELECT v1.first_name AS feedback_giver
+#SELF JOIN: Find VIPs who provide feedback to others and the corresponding VIPs who receive their feedback.--SELECT v1.first_name AS feedback_giver
 , v1.last_name AS giver_last
 , v2.first_name AS feedback_receiver
 , v2.last_name AS receiver_last 
 FROM vips v1 JOIN vips v2 
 ON v1.provides_feedback_to = v2.member_id;
 
+#INNER JOIN: List vip names and their hotel reservations. Hotel ordered alphabetically.
 --SELECT vips.last_name, vips.first_name, reservations.hotel 
 FROM vips INNER JOIN reservations 
 ON vips.member_id = reservations.member_id 
 ORDER BY hotel ASC;
 
+#SUBQUERY: List names of vips who rsvped NO to welcome rsvp but YES to dinner rsvp
 --SELECT first_name, last_name FROM vips 
 WHERE member_id IN (SELECT member_id FROM reservations WHERE welcome_rsvp = 0 AND dinner_rsvp = 1);
