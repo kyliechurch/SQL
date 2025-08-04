@@ -136,7 +136,8 @@ FROM events LEFT JOIN vips
 ON vips.event = events.event_id 
 LEFT JOIN reservations ON vips.member_id = reservations.member_id;
 
-#SELF JOIN: Find VIPs who provide feedback to others and the corresponding VIPs who receive their feedback.--SELECT v1.first_name AS feedback_giver
+#SELF JOIN: Find VIPs who provide feedback to others and the corresponding VIPs who receive their feedback.
+--SELECT v1.first_name AS feedback_giver
 , v1.last_name AS giver_last
 , v2.first_name AS feedback_receiver
 , v2.last_name AS receiver_last 
