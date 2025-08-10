@@ -1,0 +1,137 @@
+#In this SQL, I'm querying a spotify database
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL )
+
+SELECT * FROM BIT_DB.Spotifydata;
+
+# Which songs have a low valence?
+SELECT artist_name, track_name, valence 
+FROM BIT_DB.Spotifydata 
+WHERE valence <=.2 ORDER BY valence;
+
+# Which tracks have a high valence?
+SELECT artist_name, track_name, valence
+FROM Spotifydata WHERE valence >.8;
+
+# Which song have time signature of 3 minutes?
+SELECT artist_name, track_name, time_signature
+FROM BIT_DB.Spotifydata 
+WHERE time_signature =3;
+
+# What songs are the most popular that are fairly danceable?
+SELECT artist_name, track_name, popularity 
+FROM BIT_DB.Spotifydata WHERE popularity >89 
+AND danceability >.5 ORDER BY popularity desc;
+
+# What is the most danceable song?
+SELECT artist_name,track_name, danceability 
+FROM Spotifydata ORDER BY danceability DESC LIMIT 1;
+
+# Which track has the highest energy?
+SELECT artist_name,track_name, energy 
+FROM Spotifydata ORDER BY energy DESC LIMIT 1;
+
+# Which track has the lowest energy?
+SELECT artist_name,track_name, energy 
+FROM Spotifydata ORDER BY energy ASC LIMIT 1;
+
+# What is the relationship between energy and popularity?
+SELECT energy, AVG(popularity) as avg_popularity 
+FROM Spotifydata GROUP BY energy 
+ORDER BY energy;
+
+# determined the top five most popular tracks
+SELECT artist_name, track_name, popularity 
+FROM Spotifydata ORDER BY popularity DESC LIMIT 5;
+
+# What are the 5 least popular songs?
+SELECT artist_name, track_name, popularity 
+FROM Spotifydata ORDER BY popularity ASC LIMIT 5;
+
+# What are the 3 least acoustic songs?
+SELECT artist_name, track_name, acousticness 
+FROM Spotifydata ORDER BY acousticness asc LIMIT 3;
+
+# What are the 3 most acoustic songs?
+SELECT artist_name, track_name, acousticness 
+FROM Spotifydata ORDER BY acousticness DESC LIMIT 3;
+
+# What is the Average loudness of all tracks?
+SELECT AVG(loudness) AS Avg_loudness FROM Spotifydata;
+
+# What track has the fastest tempo?
+SELECT artist_name, track_name, tempo FROM Spotifydata 
+ORDER BY tempo DESC;
+
+# How many songs does each artist in this database have?
+SELECT artist_name, COUNT(*) Song_count 
+FROM Spotifydata GROUP BY artist_name 
+ORDER BY Song_count desc;
+
+# Which tracks has an instrumentalness of 0?
+SELECT artist_name, track_name, instrumentalness 
+FROM spotifydata WHERE instrumentalness >0 
+GROUP BY artist_name;
+
+# What is the average popularity of all songs?
+SELECT AVG(popularity) FROM Spotifydata;
+
+# Which artist shows the average song popularity?
+SELECT artist_name, avg(popularity) as Avg_popularity 
+FROM Spotifydata;
+
+# Which track has the most popularity?
+SELECT artist_name, track_name, 
+max(popularity) as Max_popularity 
+FROM Spotifydata;
+
+# Which track has the least popularity?
+SELECT artist_name, track_name, 
+min(popularity) as Min_popularity 
+FROM Spotifydata;
+
+# Which songs has the lowest song key?
+SELECT artist_name, track_name, song_key 
+FROM Spotifydata WHERE song_key = 0;
+
+# Which songs have the highest song key?
+SELECT artist_name, track_name, song_key 
+FROM Spotifydata WHERE song_key = 10;
+
+#determined the avg popularity, danceability, and energy by artist and track.
+SELECT artist_name,track_name,
+avg(popularity),avg(danceability),avg(energy)
+FROM Spotifydata GROUP BY artist_name, track_name;
+
+# Categorizing tracks by popularity
+SELECT track_name, popularity, 
+CASE WHEN popularity >= 80 THEN 'Hit' 
+WHEN popularity >50 THEN 'Moderate' 
+ELSE 'Low' 
+END as popularity_category 
+FROM BIT_DB.Spotifydata
+ORDER BY popularity_category desc;
+
+# Categorizing tempo of songs
+SELECT track_name, tempo, CASE WHEN tempo >=170 THEN 'Upbeat Tempo'
+WHEN tempo >140 THEN 'Moderate Tempo'
+ELSE 'Low Tempo'
+END AS Tempo_beat
+FROM Spotifydata;
