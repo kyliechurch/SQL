@@ -92,6 +92,11 @@ HAVING SUM (revenue) > 300 ORDER BY total_revenue desc;
 # Which companies have "Corp" in their name
 --SELECT company_name FROM fortune_companies WHERE company_name LIKE "%Corp%";
 
+# Which company in the Retail industry has the least revenue, and what's their revenue? 
+SELECT company_name, min(revenue)
+FROM fortune_companies
+WHERE industry = 'Retail'
+
 # Assign all companies as "High Revenue", "Medium Revenue", or "Low Revenue" based on the revenue provided
 SELECT company_name, revenue, 
 CASE WHEN revenue >=400 THEN "High Revenue"
